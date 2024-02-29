@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    {% include "navbar.html" %}
+
+<main>
+<div class="container  rounded" style="margin-top: 130px; ">
+  <div class="row ">
+    <div class="card bg-secondary " >
+      <h3 class="card-header text-center">Student Report </h3>
+      {% if stud %}
+      <div class="card-body text-primary">
+        <p class="card-text text-primary">
+          <table class="table table-dark ">
+
+            <thead class="text-primary text-center ">
+              <tr>
+                <th scope="col">SID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Batch</th>
+                <th scope="col">Grade</th>
+                <th scope="col">CRUD</th>
+                <th scope="col"> <a class="alert-link  " style="text-decoration: none; text-align: center;" href=" {% url 'add_url'  %}"><i class="bi bi-file-earmark-plus-fill"></i> <h5 style="font-weight: bolder; "></i>ADD</h5></a>
+                </th>
+                
+              </tr> 
+            </thead>
+
+            <tbody class="text-center">
+              {%for S in stud %}
+              <tr>
+                <td>{{S.sid}}</td>
+                <td>{{S.first_name}} {{S.last_name}}</td>
+                <td>{{S.batch}}</td>
+                <td>{{S.grade}}</td>
+                <td>
+                  <button type="button" class="btn btn-success mx-1" href = "{% url 'view_info_url' S.id %}" data-bs-toggle="modal" data-bs-target = '#mymodal{{S.id}}'>info</button>
+                  <!-- view modal -->
+                  <div class="modal " id ="mymodal{{S.id}}" tabindex="-1" aria-labelledby="mymodallabel1" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content bg-dark text-info"  >
+                        <div class="modal-header">
+                          <h5 class="modal-title">Student: {{S.first_name}} {{S.last_name}}</h5>
+                        </div>
+                        <div class="modal-body text-secondary">
+                          <ul class="list-unstyled">
+                            <li>SID: <strong>{{S.sid}}</strong></li>
+                            <li>first name: <strong>{{S.first_name}}</strong></li>
+                            <li>Last name: <strong>{{S.last_name}}</strong></li>
+                            <li>Batch: <strong>{{S.batch}}</strong></li>
+                            <li>Email: <strong>{{S.email}}</strong></li>
+                            <li>Grade: <strong>{{S.grade}}</strong></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <a  class="btn btn-secondary mx-1" href = "{% url 'update_url' S.id %}">Update</a>
+
+                  <button type="button" class="btn btn-danger mx-1" data-bs-toggle="modal" data-bs-target = '#delete{{S.id}}'>Delete</button>
+                  <!-- delete modal -->
+                  <div class="modal " id ="delete{{S.id}}" tabindex="-1" aria-labelledby="mymodallabel2" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content bg-dark text-info"  >
+                        <div class="modal-header">
+                          <h5 class="modal-title">Student: {{S.first_name}} {{S.last_name}}</h5>
+                        </div>
+                        <div class="modal-body text-secondary">
+                          <p>Are you sure you want to DELETE this student </p>
+                        </div>
+                        <div class="modal-footer">
+                          <form action="{% url 'delete_url' S.id%}" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-danger" value="Delete">
+                          </form>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                          
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+
+                </td>
+                <td></td>
+
+              </tr>
+              {% endfor %}
+            </tbody>
+
+          </table>
+          </p>
+      </div>
+    </div>
+    {% else %}
+      <div class="alert alert-success m-5 mt-5" role=" alert">
+        <p class="alert alert-secondary">No Records Yet</p >
+        <a class="alert-link  " style="text-decoration: none; text-align: center;" href=" {% url 'add_url'  %}"> <h5 style="font-weight: bolder; font-size: x-large;">ADD</h5></a>
+        <!-- <br> -->
+        <!-- <a href="{% url 'home_url' %}" class="alert-link">Go to home page.</a> -->
+    </div>
+
+    {% endif %}
+</div>
+</div>
+</main>   
+</body>
+</html>

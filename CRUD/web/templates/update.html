@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include "navbar.html" %}
+<br> 
+    <div class=" container ">
+        {% if success %}
+        <div class="alert alert-success m-5 mt-5"  role=" alert">
+            updated successfully. <br>
+            <a href="{% url 'home_url' %}" class="alert-link">Go to home page.</a>
+        </div>
+        {% else %}
+         <div class="row justify-content-center">
+            <div class="col-5">
+                <div class="card text-dark bg-transparent " >
+                    <div class="card-header text-center text-light">Update Report</div>
+                    <div class="card-body text-light">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type=" submit" class="btn btn-success">Update</button>
+                            <a href="{% url 'home_url' %}"class="btn btn-secondary" >Cancel</a>
+                        </form>
+    
+                    </div>
+                  </div>
+    
+            </div>
+         </div>
+        {% endif %}
+    
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include "navbar.html" %}
+    <div class=" container rounded-circle " style="margin-top: 60px;">
+    {% if success %}
+    <div class="alert alert-success m-5 mt-5" style="margin-top: 80px;" role=" alert">
+        new student added successfully. <br>
+        <a href="{% url 'home_url' %}" class="alert-link">Go to home page.</a>
+    </div>
+    {% else %}
+     <div class="row justify-content-center text-light">
+        <div class="col-5">
+            <div class="card text-dark bg-transparent " >
+                <div class="card-header text-center text-light">Register Report</div>
+                <div class="card-body text-light">
+                    <form action="{% url 'add_url' %}" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type=" submit" class="btn btn-success">ADD</button>
+                        <a href="{% url 'home_url' %}"class="btn btn-info" >Cancel</a>
+                    </form>
+
+                </div>
+              </div>
+
+        </div>
+     </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
